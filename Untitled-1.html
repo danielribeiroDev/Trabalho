@@ -1,0 +1,52 @@
+<!DOCTYPE hmtl>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Teste</title>
+    </head>
+
+    <body>
+        <main>
+            <form action="">
+                <textarea id="codSped" cols="30" rows="10"></textarea>
+                <button>Confirmar</button>
+            </form>
+        </main>
+    </body>
+
+    <script>
+        function funcao() {
+            var codSped = textarea.value;
+            codSped = codSped.split('\n');
+            
+            var codSped_worked = [];
+            for(let i = 0; i < codSped.length; i++) {
+                var aux = codSped[i].slice(1);
+                aux = aux.slice(0, -1);
+                aux = aux.split('|');
+                codSped_worked.push(aux);
+            }
+            return codSped_worked;
+        }
+
+        function corrigeUN(array) {
+            for(let i = 0; i < array.length; i++) {
+                if(array[i].includes('0200')) {
+                    var codItem = array[i][1];
+                    var unItem = array[i][5];
+                    for(let i2 = i; i2 < array.length; i2++) {
+                        if(array[i2].includes(codItem)) {
+                            if(array[i2][5] != unItem) {
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        const textarea = document.querySelector("#codSped");
+        const button = document.querySelector("button");
+        button.onclick = funcao;
+    </script>
+</html>
