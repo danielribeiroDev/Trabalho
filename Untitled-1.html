@@ -11,6 +11,9 @@
                 <textarea id="codSped" cols="30" rows="10"></textarea>
                 <button>Confirmar</button>
             </form>
+            <form action="">
+                <textarea id="saida" cols="30" rows="10"></textarea>
+            </form>
         </main>
     </body>
 
@@ -34,19 +37,31 @@
                 if(array[i].includes('0200')) {
                     var codItem = array[i][1];
                     var unItem = array[i][5];
-                    for(let i2 = i; i2 < array.length; i2++) {
+                    for(var i2 = i; i2 < array.length; i2++) {
                         if(array[i2].includes(codItem)) {
                             if(array[i2][5] != unItem) {
-                                
+                                array[i2].splice(5,1,unItem);
                             }
                         }
                     }
                 }
             }
+            return array;
+        }
+
+        function padronizaCod(array) {
+            var codPadronizado = '';
+            for(let i = 0; i < array.length; i++) {
+                var aux = array[i].join('|');
+                aux = '|' + aux + '|\n';
+                codPadronizado = codPadronizado + aux;
+            }
+            return codPadronizado;
         }
 
         const textarea = document.querySelector("#codSped");
         const button = document.querySelector("button");
+        const saida = document.querySelector("#saida")
         button.onclick = funcao;
     </script>
 </html>
