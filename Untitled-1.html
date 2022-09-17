@@ -1,25 +1,53 @@
 <!DOCTYPE hmtl>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset="latin1">
         <title>Teste</title>
     </head>
 
     <body>
         <main>
-            <form action="">
-                <textarea id="codSped" cols="30" rows="10"></textarea>
-                <button>Confirmar</button>
-            </form>
-            <form action="">
-                <textarea id="saida" cols="30" rows="10"></textarea>
-            </form>
+            <label for="file">File</label>
+            <input type="file" name="" id="file">
+            <button id="download">Download</button>
         </main>
     </body>
 
     <script>
-        function funcao() {
-            var codSped = textarea.value;
+        var x = '';
+        document.getElementById('file').addEventListener('change', function() {
+        var file = new FileReader();
+            file.onload = () => {
+            x = file.result;
+            }
+            file.readAsText(this.files[0], 'ISO-8859-1');
+        });
+
+        function createAndDownload() {  //createAndDownload(filename, text)
+            master();
+
+            const element = document.createElement('a');
+
+            element.setAttribute('href', 'data:text/plain;charset=latin1,' + encodeURIComponent(x));
+            element.setAttribute('download', 'spedCorrigido');
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+
+        function master(){
+            var codSped_worked = preparaCod();
+            var codCorrigido = corrigeUN(codSped_worked);
+            var codPadronizado = padronizaCod(codCorrigido);
+            x = codPadronizado;
+        }
+
+        function preparaCod() {
+            var codSped = x;
             codSped = codSped.split('\n');
             
             var codSped_worked = [];
@@ -51,17 +79,17 @@
 
         function padronizaCod(array) {
             var codPadronizado = '';
-            for(let i = 0; i < array.length; i++) {
+            for(let i = 0; i < array.length -1; i++) {
+                console.log(array[i]);
                 var aux = array[i].join('|');
-                aux = '|' + aux + '|\n';
+                aux = '|' + aux + '\n';
+                console.log(aux);
                 codPadronizado = codPadronizado + aux;
             }
             return codPadronizado;
         }
 
-        const textarea = document.querySelector("#codSped");
-        const button = document.querySelector("button");
-        const saida = document.querySelector("#saida")
-        button.onclick = funcao;
+        const btnDownload = document.getElementById('download');
+        btnDownload.onclick = createAndDownload;
     </script>
 </html>
