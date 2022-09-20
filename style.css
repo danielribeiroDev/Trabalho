@@ -1,0 +1,10 @@
+body {
+    width: 80vw;
+    margin:0 auto;
+}
+
+#console {
+    width: 100%;
+    height: 40vh;
+    padding: 2em;
+}

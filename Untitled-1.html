@@ -2,6 +2,8 @@
 <html>
     <head>
         <meta charset="latin1">
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
         <title>Teste</title>
     </head>
 
@@ -9,87 +11,11 @@
         <main>
             <label for="file">File</label>
             <input type="file" name="" id="file">
+            <button id="executar">Confirmar</button>
             <button id="download">Download</button>
+            <textarea name="console" id="console" cols="30" rows="10"></textarea>
         </main>
     </body>
 
-    <script>
-        var x = '';
-        document.getElementById('file').addEventListener('change', function() {
-        var file = new FileReader();
-            file.onload = () => {
-            x = file.result;
-            }
-            file.readAsText(this.files[0], 'ISO-8859-1');
-        });
-
-        function createAndDownload() {  //createAndDownload(filename, text)
-            master();
-
-            const element = document.createElement('a');
-
-            element.setAttribute('href', 'data:text/plain;charset=latin1,' + encodeURIComponent(x));
-            element.setAttribute('download', 'spedCorrigido');
-
-            element.style.display = 'none';
-            document.body.appendChild(element);
-
-            element.click();
-
-            document.body.removeChild(element);
-        }
-
-        function master(){
-            var codSped_worked = preparaCod();
-            var codCorrigido = corrigeUN(codSped_worked);
-            var codPadronizado = padronizaCod(codCorrigido);
-            x = codPadronizado;
-        }
-
-        function preparaCod() {
-            var codSped = x;
-            codSped = codSped.split('\n');
-            
-            var codSped_worked = [];
-            for(let i = 0; i < codSped.length; i++) {
-                var aux = codSped[i].slice(1);
-                aux = aux.slice(0, -1);
-                aux = aux.split('|');
-                codSped_worked.push(aux);
-            }
-            return codSped_worked;
-        }
-
-        function corrigeUN(array) {
-            for(let i = 0; i < array.length; i++) {
-                if(array[i].includes('0200')) {
-                    var codItem = array[i][1];
-                    var unItem = array[i][5];
-                    for(var i2 = i; i2 < array.length; i2++) {
-                        if(array[i2].includes(codItem)) {
-                            if(array[i2][5] != unItem) {
-                                array[i2].splice(5,1,unItem);
-                            }
-                        }
-                    }
-                }
-            }
-            return array;
-        }
-
-        function padronizaCod(array) {
-            var codPadronizado = '';
-            for(let i = 0; i < array.length -1; i++) {
-                console.log(array[i]);
-                var aux = array[i].join('|');
-                aux = '|' + aux + '\n';
-                console.log(aux);
-                codPadronizado = codPadronizado + aux;
-            }
-            return codPadronizado;
-        }
-
-        const btnDownload = document.getElementById('download');
-        btnDownload.onclick = createAndDownload;
-    </script>
+    <script src="validaArquivo.js"></script>
 </html>
