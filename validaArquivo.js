@@ -40,10 +40,12 @@ function createAndDownload() {  //createAndDownload(filename, text)
 // AGLOMERADO DE FUNCOES QUE TRABALHAM O CONTEUDO DO ARQUIVO PASSADO.
 function master(){
     var codSped_worked = preparaCod();
-    var codCorrigido = corrigeUNeNCM(codSped_worked);
+    var codCorrigido = corrigeNCM(codSped_worked);
+    codCorrigido = corrigeUN(codCorrigido);
     confereNFvalue(codCorrigido);
     var codPadronizado = padronizaCod(codCorrigido);
     x = codPadronizado;
+    console.value = textoConsole;
 }
 
 // MODIFICA A STRING PARA O PADRAO NECESSARIO PARA O FUNCIONAMENTO DO PROGRAMA.
@@ -64,23 +66,32 @@ function preparaCod() {
 }
 
 // VARRE TODOS MICRO ARRAY'S. 
-// CORRIGE UNIDADE DO ITEM (REG C170) QUE ESTIVER DIVERGENTE AO REG 0200.
 // CORRIGE ITEM COM NCM 99999999.
-function corrigeUNeNCM(array) {
-    textoConsole += tituloConsoleLog('MODIFICACOES DE NCM E UNIDADE(C170)');
+function corrigeNCM(array) {
+    textoConsole += tituloConsoleLog('MODIFICACOES DE NCM');
     for(let i = 0; i < array.length; i++) {
         if(array[i].includes('0200')) {
             if(array[i].includes('99999999')) {
                 array[i].splice(7,1,'00000000');
                 textoConsole += ('NCM do item ' + array[i][1] + ' modificado de 99999999 para 00000000\n');
             }
-            var codItem = array[i][1];
-            var unItem = array[i][5];
-            for(var i2 = i; i2 < array.length; i2++) {
-                if(array[i2].includes(codItem)) {
-                    if(array[i2][5] != unItem) {
-                        textoConsole += ('Campo UN do item ' + codItem + ' modificado de ' + array[i2][5] + ' para ' + unItem + '\n')
-                        array[i2].splice(5,1,unItem);
+        }
+    }
+    return array;
+}
+
+function corrigeUN(array) {
+    textoConsole += tituloConsoleLog('MODIFICACOES DE UNIDADE');
+    for(let i = 0; i < array.length; i++) {
+        if(array[i].includes('C170')) {
+            let codItem = array[i][2];
+            let unItem = array[i][5];
+            for(let ii = 0; ii < array.length; ii++ ) {
+                if(array[ii].includes('0200') 
+                && array[ii].includes(codItem)) {
+                    if(array[ii][5] != unItem) {
+                        textoConsole += ('Campo UN do item no ' + codItem + ' REG 0200 modificado de ' + array[ii][5] + ' para ' + unItem)
+                        array[ii].splice(5,1,unItem);
                     }
                 }
             }
@@ -109,8 +120,6 @@ function confereNFvalue(array){
             textoConsole += (numDoc + ' = > Divergencia encontrada\n');
         }
     }
-    console.value = textoConsole;
-    textoConsole = '';
 }
 
 // PADRONIZA O CODIGO PARA O FORMATO SPED.
