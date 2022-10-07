@@ -1,6 +1,6 @@
 <h1 align="center" id="título"> ValidaSped </h1>
 
-<img src="analytics-g69fa5ad3b_1920.jpg" height="300vh" width="100%" >
+<img src="turn-on-gffe739afd_1920.jpg" height="300vh" width="100%" >
 <p align="center">
 <img src="https://img.shields.io/static/v1?label=STATUS&message=EM DESENVOLVIMENTO&color=yellow&style=for-the-badge" id="badges">
 </p>
@@ -27,7 +27,7 @@
   <li>CONSOLE DE MODIFICAÇÕES: Um área que exibe as modificações executadas pelo programa</li>
 </ul>
 <p align="center">
-<img src="Encriptador.gif" >
+<img src="VideoValidaSped.gif" >
 </p>
 
 <h2 id="acesso-ao-projeto">📁 Acesso ao projeto</h2>
