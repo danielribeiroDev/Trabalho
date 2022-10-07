@@ -1,9 +1,17 @@
 // SELETORES.
 const console = document.getElementById('console');
-const btnExecutar = document.getElementById('executar')
+const btnExecutar = document.getElementById('executar');
 const btnDownload = document.getElementById('download');
+const btnEscolherArquivo = document.getElementById('escolher-arquivo');
+const file = document.getElementById('file');
 
 // EVENTOS ONCLICK.
+document.getElementById('escolher-arquivo').onclick = (e) => {
+    file.click();
+    document.getElementById("download").style.background = '#161525';
+
+}
+
 btnExecutar.onclick = master;
 btnDownload.onclick = createAndDownload;
 
@@ -39,12 +47,14 @@ function createAndDownload() {  //createAndDownload(filename, text)
 
 // AGLOMERADO DE FUNCOES QUE TRABALHAM O CONTEUDO DO ARQUIVO PASSADO.
 function master(){
+    document.getElementById("download").style.background = 'white';
+
     var codSped_worked = preparaCod();
     var codCorrigido = corrigeNCM(codSped_worked);
     codCorrigido = corrigeUN(codCorrigido);
-    confereNFvalue(codCorrigido);
     var codPadronizado = padronizaCod(codCorrigido);
     x = codPadronizado;
+    textoConsole += 'FIM !!!';
     console.value = textoConsole;
 }
 
@@ -90,7 +100,7 @@ function corrigeUN(array) {
                 if(array[ii].includes('0200') 
                 && array[ii].includes(codItem)) {
                     if(array[ii][5] != unItem) {
-                        textoConsole += ('Campo UN do item no ' + codItem + ' REG 0200 modificado de ' + array[ii][5] + ' para ' + unItem)
+                        textoConsole += ('Campo UN do item no ' + codItem + ' REG 0200 modificado de ' + array[ii][5] + ' para ' + unItem + '\n')
                         array[ii].splice(5,1,unItem);
                     }
                 }
@@ -102,6 +112,7 @@ function corrigeUN(array) {
 
 // ANALISA SE O VALOR DO CAMPO #12 DO REG C100 É IGUAL A SOMA DOS CAMPOS #07 DOS REGISTROS C170 CORREPONDENTES.
 // => RETORNA O N° DOC DAS DIVERGENCIAS ENCONTRADAS.
+/*
 function confereNFvalue(array){ 
     textoConsole += tituloConsoleLog('Registro C100 não bate com soma C170')
     for(let i = 0; i < array.length; i++) {
@@ -109,9 +120,9 @@ function confereNFvalue(array){
             var numDoc = array[i][7];
             var totDoc = parseFloat(array[i][11].replace(',','.'));
             var totItens = 0;
+            i++;
         }
-        i++;
-        while(array[i].includes('C170')) {
+        while(array[i][0].includes('C170')) {
             totItens += parseFloat(array[i][6].replace(',','.'));
             i++;
         }
@@ -121,6 +132,7 @@ function confereNFvalue(array){
         }
     }
 }
+*/
 
 // PADRONIZA O CODIGO PARA O FORMATO SPED.
 function padronizaCod(array) {

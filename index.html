@@ -1,0 +1,31 @@
+<!DOCTYPE hmtl>
+<html>
+    <head>
+        <meta charset="latin1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
+        <title>Teste</title>
+    </head>
+
+    <body>
+        <main>
+            <div class="centraliza">
+                <div class="container">
+                    <button id="escolher-arquivo">Select .txt</button>
+                    <button id="executar">Confirmar</button>
+                </div>
+                <button id="download">Download</button>
+            </div>
+            <input type="file" name="file" id="file" >
+        </main>
+        <section class="div-console">
+            <h2>Console de Modificacoes</h2>
+            <textarea name="console" id="console" cols="30" rows="10"></textarea>
+        </section>
+    </body>
+
+    <script src="validaArquivo.js"></script>
+</html>
